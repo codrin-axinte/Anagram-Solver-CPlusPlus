@@ -10,7 +10,7 @@ using namespace std;
 vector<string> split(string value, char token);
 string GetAnagram(unsigned maxLength);
 void FindSolution(string anagram, string word);
-
+bool ContainsAll(string anagram, string word);
 
 unsigned bestWeight = 0;
 string solution;
@@ -25,35 +25,67 @@ int main(){
   while(infile >> line){
     string word = split(line, ',').at(0);
     if(word.length() > anagram.length()) continue; 
-    
     FindSolution(anagram, word); 
   }
+  if(solution == ""){
+  	cout << "No solution was found!" << endl;
+  	
+  } else {
+  	cout << "Best solution: " << solution << endl;
+  }
   
-  cout << "Best solution: " << solution << endl;
   return 0;
 }
 
+// zza -> a, OZR -> or, tca -> act
+/* Tinker
+	
+  
+*/  
+
+
 
 void FindSolution(string anagram, string word) {
-  if(solution.length() > word.length()) return;
-  unsigned weight = 0;
-  map<char, int> repeateadLetters;
-  for(unsigned i=0; i < anagram.length(); i++){
-    for(unsigned j=0; j < word.length(); j++){
-      if(anagram[i] != word[j]) continue;
-      repeateadLetters[word[j]]++;
+	bool valid = true;
+	map<unsigned, bool> slots;
+	cout << "Word: " << word << endl;
+	cout << "=================" << endl;
+    for(unsigned i=0; i < word.length(); i++){ // 0 -> a
+	  bool found = false;
       
-      if(repeateadLetters[word[j]] == 1)
-        weight++;
+      for(unsigned j=0; j < anagram.length(); j++){
+      	cout << word[i] << " -> " << anagram[j] << " ";
+  	 	
+  	 	if(slots[j] == true) { // tca -> 0,1,2 -> 
+	 		cout << "@occupied";
+	 	} else if(anagram[j] == word[i]) {
+           slots[j] = true;
+           found = true;
+           cout << "@found";
+    	} else {
+    		slots[j] = false;
+    	}
+    	cout << endl;
+      }
+      
+      cout << "----------" << endl;
+      
+      if(found == false) {
+      	valid = false;
+      	break;
+      }
     }
-  }
-  
-  if(weight > bestWeight){
-    solution = word;
-    bestWeight = weight;
-  }
-  
+    
+	if(valid) {
+		if(solution.length() > word.length()) return;
+		solution = word;
+		cout << "Is Valid" << endl;
+	}
+	
+	cout << "=================" << endl;
 }
+
+
 
 string GetAnagram(unsigned maxLength) {
   string a;
