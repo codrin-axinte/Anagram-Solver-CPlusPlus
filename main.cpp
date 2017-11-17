@@ -9,52 +9,61 @@ using namespace std;
 
 vector<string> split(string value, char token);
 string GetAnagram(unsigned maxLength);
-void FindSolution(string anagram, string word);
+void FindSolution(string anagram, string word, string &solution);
 
-string solution;
+//string solution; // stores the best solution
 
 int main() {
-	string anagram = GetAnagram(6);
-	cout << "Please wait! Cracking..." << endl;
-	ifstream infile("db.csv");
-	string line;	
-	while (infile >> line) {		
-		string word = split(line, ',').at(0);
-		if (word.length() > anagram.length()) continue;
-		FindSolution(anagram, word);		
-	}
-	if (solution == "") 
-		std::cout << "No solution was found!" << endl;	
-	else 
-		std::cout << "Best solution: " << solution << endl;
+	ifstream db;
+	string dbPath = "db.csv";
+
+	while (true) { // Continous loop for application	
+		string anagram = GetAnagram(6); // Obtain a valid anagram
+		std::cout << "Please wait! Cracking..." << endl;
+		db.open(dbPath); // open the database file
+		string line; // store the current line
+		string solution; // stores the best solution
+		while (db >> line) { // read each line
+			string word = split(line, ',').at(0); //because it is a csv file, split it and get the word
+			if (word.length() > anagram.length()) continue; // if the word length is greater than the anagram's we skip it, because we don't need it
+			FindSolution(anagram, word, solution); // Solve the anagram and get us a solution
+		}
+		db.close(); // close the file
 		
-	system("pause");
+		if (solution == "") // Check if a solution was found or not and output a message.
+			std::cout << "No solution was found!" << endl;
+		else
+			std::cout << "Best solution: " << solution << endl;
+	}
+	
+	
+	system("pause"); // Pause the console
 
 	return 0;
 }
 
 
-void FindSolution(string anagram, string word) {
-	bool valid = true;
-	map<unsigned, bool> slots;	
-	for (unsigned i = 0; i < word.length(); i++) {
-		bool found = false;
-		for (unsigned j = 0; j < anagram.length(); j++) {			
-			if (anagram[j] == word[i] && !found) {
-				if (!slots[j]) {
-					found = true;
-					slots[j] = true;										
+void FindSolution(string anagram, string word, string &solution) {
+	bool valid = true; //stores if the current word is valid	
+	map<unsigned, bool> slots; // maps each letter position of the anagram with the value of occupied or not.
+	for (unsigned i = 0; i < word.length(); i++) { // Iterate over each letter of the given word(ACT/CAT)
+		bool found = false; // stores if a word letter was found in the anagram		
+		for (unsigned j = 0; j < anagram.length(); j++) { // Iterate over each letter of the giver anagram(TCA)
+			if (anagram[j] == word[i] && !found) { // if the letter matches and it wasn't found already
+				if (!slots[j]) { // If the slot is not occupied already, example: if the anagram is "sas" the world should be "ass", but without it, I will be "as" because of the repeated letters
+					found = true; // set letter as found/match
+					slots[j] = true; // occupy the slot			
 				}	
 			}		
 		}
-		if (found == false) {
+		if (found == false) { // if one letter was not found, we break the loop, the word is not a match
 			valid = false;
-			break;
+			break; 
 		}
 	}
 
-	if (valid && solution.length() < word.length()) {
-		solution = word;		
+	if (valid && solution.length() < word.length()) { // if the given word is valid, check its length against the last solution's length
+		solution = word; // we store a new solution		
 	}	
 }
 
@@ -69,7 +78,11 @@ string GetAnagram(unsigned maxLength) {
 		if (a.length() > maxLength) {
 			std::cout << "Anagram can have " << maxLength << " maximum letters" << endl;
 		}
-	} while (a.length() > maxLength);
+		if (a == "" || a == " ") {
+			std::cout << "Anagram can't be empty!" << endl;
+		}
+		
+	} while (a.length() > maxLength || a == "" || a == " ");
 
 	return a;
 }
@@ -82,7 +95,7 @@ vector<string> split(string value, char token) {
 
 	while (ss.good()) {
 		string substr;
-		getline(ss, substr, ',');
+		getline(ss, substr, token);
 		vect.push_back(substr);
 	}
 
