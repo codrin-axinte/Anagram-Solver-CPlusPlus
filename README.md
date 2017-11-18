@@ -2,7 +2,7 @@
 > Design a system that will allow the player to enter up to 3 random letters. The system will return the beste, largest, valid English word that can be made up of the 3 letters(blanks/spaces are not allowed). For example: TCA should return CAT, OZR should return OR, ZZA should return A.
 > **Extension: Expand the project so that it supports 4 letter anagrams(optional: up to max of 6)**
 
-![Screenshot](https://github.com/codrin-axinte/Anagram-Solver/blob/master/AnagramSolver.png)
+![Screenshot](https://github.com/codrin-axinte/Anagram-Solver-CPlusPlus/blob/master/Flowchart.png)
 It searches for the best valid english word from a given file, matching criterias explained below. It will also provide some other suggestions if found.
 
 ## Installation
