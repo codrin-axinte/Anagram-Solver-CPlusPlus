@@ -48,12 +48,12 @@ void FindSolution(string anagram, string word, string &solution) {
 	map<unsigned, bool> slots; // maps each letter position of the anagram with the value of occupied or not.
 	for (unsigned i = 0; i < word.length(); i++) { // Iterate over each letter of the given word(ACT/CAT)
 		bool found = false; // stores if a word letter was found in the anagram		
-		for (unsigned j = 0; j < anagram.length(); j++) { // Iterate over each letter of the giver anagram(TCA)
-			if (anagram[j] == word[i] && !found) { // if the letter matches and it wasn't found already
-				if (!slots[j]) { // If the slot is not occupied already, example: if the anagram is "sas" the world should be "ass", but without it, I will be "as" because of the repeated letters
+		for (unsigned j = 0; j < anagram.length() && !found; j++) { // Iterate over each letter of the given anagram(TCA)
+			// if the letter matches and it wasn't found already
+			// If the slot is not occupied already, example: if the anagram is "sas" the world should be "ass", but without it, I will be "as" because of the repeated letters
+			if (anagram[j] == word[i] && !slots[j]) { 				
 					found = true; // set letter as found/match
-					slots[j] = true; // occupy the slot			
-				}	
+					slots[j] = true; // occupy the slot								
 			}		
 		}
 		if (found == false) { // if one letter was not found, we break the loop, the word is not a match
