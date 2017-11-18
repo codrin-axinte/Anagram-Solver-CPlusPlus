@@ -3,6 +3,7 @@
 > **Extension: Expand the project so that it supports 4 letter anagrams(optional: up to max of 6)**
 
 ![Screenshot](https://github.com/codrin-axinte/Anagram-Solver-CPlusPlus/blob/master/Flowchart.png)
+
 It searches for the best valid english word from a given file, matching criterias explained below. It will also provide some other suggestions if found.
 
 ## Installation
