@@ -59,7 +59,7 @@ The program allows the player to specify a file to read, if left blank, a defaul
 
 ## Meta
 
-Codrin Axinte – [@LinkedIn](https://www.linkedin.com/in/codrin-axinte-93776814b/) – xntcodrin@yahoo.com – [loopbytes@yahoo.com](http://loopbytes@yahoo.com)
+Codrin Axinte – [@LinkedIn](https://www.linkedin.com/in/codrin-axinte-93776814b/) – xntcodrin@yahoo.com – loopbytes@yahoo.com
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
 
